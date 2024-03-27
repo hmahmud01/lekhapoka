@@ -1,26 +1,17 @@
-const db = require("../models");
+const { Category } = require("../models/mongo.model");
 
-exports.createCategory = async (req, res, next) => {
-    let data = {
-        title: req.body.title
-    }
-
-    db.category.create(data)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the Category."
-            });
-        });
+const allCategories = async (req, res, next) => {
+    const categories = await Category.find();
+    res.status(200).json(categories);
 }
 
-exports.listCategory = async (req, res, next) => {
-    const list = await db.category.findAll();
+const createCategory = async (req, res, next) => {
+    const newCategory = new Category({...req.body})
+    const createCategory = await newCategory.save()
+    return res.status(201).json(createCategory)
+}
 
-    res.status(200).json({
-        message: list
-    })
+module.exports = {
+    allCategories,
+    createCategory,
 }

@@ -3,6 +3,7 @@ const cors = require("cors");
 const http = require("http");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const { Sample } = require("./source/models/mongo.model");
 
@@ -12,11 +13,7 @@ require('dotenv').config();
 
 const app = express();
 
-var corsOptions = {
-    origin: "http://localhost:3002"
-}
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,6 +31,12 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to the system" });
 });
 
+require("./source/authsrc/auth/auth.routes")(app);
+
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 routes(app);
 
 const httpServer = http.createServer(app);
@@ -50,8 +53,10 @@ const PORT = process.env.PORT || 3000;
 const start = async () => {
     try {
         await mongoose.connect(
-            "mongodb://localhost:27017/lekhapoka"
-        );
+            "mongodb://localhost:27017/lekhapoka", {
+                useNewUrlParser: true,
+                useUnifiedTopology: true    
+        });
         httpServer.listen(PORT, () => {
             console.log(`Lekha Poka Server is running on port ${PORT} and mongoose running`)
         })

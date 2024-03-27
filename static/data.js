@@ -1,8 +1,30 @@
+const category = [
+  {
+    id: "sdfsdf",
+    title: "sdfd",
+    uuid: "sfefe",
+    date: "sdfef"
+  },
+  {
+    id: "sdfsdf",
+    title: "sdfd",
+    uuid: "sfefe",
+    date: "sdfef"
+  },
+  {
+    id: "sdfsdf",
+    title: "sdfd",
+    uuid: "sfefe",
+    date: "sdfef"
+  }
+]
+
 export const mainContentPosts = [
     {
       id: "xyz1",
       title: "অবেলায় শঙ্খধ্বনি",
       writer: "রুদ্র মুহম্মদ শহীদুল্লাহ",
+      category: "sdfe",
       content: `অতোটা হৃদয় প্রয়োজন নেই,</br>
             কিছুটা শরীর কিছুটা মাংস মাধবীও চাই।</br>
             এতোটা গ্রহণ এতো প্রশংসা প্রয়োজন নেই</br>
