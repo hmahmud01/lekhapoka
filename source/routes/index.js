@@ -29,15 +29,16 @@ let routes = app => {
     router.delete("/samples/:id", sampleController.deleteSample);
     router.post('/upload', upload.single('file'), uploadController.uploadFile);
     router.get('/files', uploadController.allFiles);
-    router.get('/uploads', express.static(path.join(__dirname, 'uploads')));
     router.get('/categories', categoryController.allCategories);
     router.post('/categories', categoryController.createCategory);
     router.get('/writers', writerController.allWriters);
-    router.post('/writers', writerController.createWriter);
-    router.get('/post', postController.allPost);
-    router.post('/post', postController.createPost);
+    router.post('/writers', upload.single('file'), writerController.createWriter);
+    router.get('/posts', postController.allPost);
+    router.post('/posts', upload.single('file'), postController.createPost);
+    router.get('/posts/:cat', postController.findPost);
     router.get('/sliders', sliderController.allSliders);
-    router.post('/sliders', sliderController.createSlider);
+    router.post('/sliders', upload.single('file'), sliderController.createSlider);
+    router.get('/uploads', express.static(path.join(__dirname, 'uploads')));
  
     return app.use("/", router);
       
